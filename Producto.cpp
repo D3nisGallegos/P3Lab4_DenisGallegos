@@ -62,10 +62,17 @@ class Producto{
 	}
 	
 	void SETprecio(double x){
+		
 		precio = x; 
 	}
 	
-	
+	~Producto(){
+		delete id;
+		delete nombre; 
+		delete categoria;
+		delete cantidad;
+		delete precio; 
+	}
 };
 
 
