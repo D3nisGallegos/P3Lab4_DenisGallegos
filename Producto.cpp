@@ -66,13 +66,6 @@ class Producto{
 		precio = x; 
 	}
 	
-	~Producto(){
-		delete id;
-		delete nombre; 
-		delete categoria;
-		delete cantidad;
-		delete precio; 
-	}
 };
 
 

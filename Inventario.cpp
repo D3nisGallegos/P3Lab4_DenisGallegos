@@ -22,6 +22,10 @@ class Inventario{
 		categorias = categ; 
 	}//Fin del constructor.
 	
+	Inventario(vector <Producto*> producto){
+		productos = producto;
+	}//Fin del constructor.
+	
 	void Agregarproducto(Producto* x){
 		productos.push_back(x);
 	}
@@ -41,6 +45,12 @@ class Inventario{
 	void SETcategorias(vector <string> x){
 		categorias = x; 
 	} 
+	
+	~Inventario(){
+		for (int c =0; c < productos.size();c++){
+			delete productos [c];
+		}
+	}
 	
 	
 };

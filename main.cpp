@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
 		cout << "1) Mantenimiento de productos. " <<endl;  
 		cout << "2) Estadisticas generales. " <<endl;
 		cout << "3) Busqueda por nombre. " <<endl; 
-		cout << "4) Salir."
+		cout << "4) Salir.";
 		cout << "Ingrese la opcion: " <<endl; 
 		cin >> opcion;
 		switch (opcion){
@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
 					cout << "1) Agregar productos." <<endl;
 					cout << "2) Modificar productos. " <<endl;
 					cout << "3) Eliminar productos. " <<endl; 
-					cout << "4) Salir."
+					cout << "4) Salir.";
 					cout << "Ingrese la opcion: " <<endl; 
 					cin >> opcion2;
 					switch (opcion2){
@@ -70,7 +70,7 @@ int main(int argc, char** argv) {
 							int unidades; 
 							cin >> unidades; 
 							cout << "Ingrese el precio: " <<endl; 
-							double precio; 
+							double precio = 0; 
 							cin >> precio; 
 							Producto* product = new Producto(id, nombre, categoria, unidades, precio);
 							identificadores.push_back(id);
@@ -88,7 +88,7 @@ int main(int argc, char** argv) {
 							vector <Producto*> todos = inventario->GETproductos();
 							for (int c = 0; c < inventario->GETproductos().size();c++){
 								int h = inventario->GETproductos() [c]->GETid(); 
-								if (h = id){
+								if (h == id){
 									valid = true; 
 									Producto* objeto = inventario->GETproductos() [c];
 									cout << "Ha accedido al objeto: " <<endl; 
@@ -168,9 +168,18 @@ int main(int argc, char** argv) {
 									Producto* objeto = inventario->GETproductos() [c];
 									cout << "Ha accedido al objeto: " <<endl; 
 									cout << "Id: " << objeto->GETid() << " Nombre: " << objeto->GETnombre() << " Categ: " << objeto->GETcategoria() << " Unidades: " << objeto->GETcantidad() << " Precio: " << objeto->GETprecio();
-									 							
+									delete inventario->GETproductos() [c]; 		
+									nuevo = objeto; 					
 								}
 							}
+							int elemento = 0;
+							for (int j = 0; j < inventario->GETproductos().size();j++){
+								Producto* objeto = inventario->GETproductos() [j];
+								if (nuevo == objeto){
+									elemento = j; 
+								}
+							}
+							inventario->GETproductos().erase(inventario->GETproductos().begin()+elemento);
 							if (valid == false){
 								cout << "El id ingresado no existe. " <<endl;		
 							}
@@ -182,12 +191,47 @@ int main(int argc, char** argv) {
 				}//Fin del caso 1.
 		    case 2:
 		   		{
-		   			
+		   		cout << "ESTADISTICAS GENERALES: " <<endl;	
+		   		cout << "Listado: " <<endl;
+		   		double preciototal = 0; 
+		   		int unidadestotales = 0; 
+		   		int productosunicos = inventario->GETproductos().size();
+		   		for (int c = 0;c < inventario->GETproductos().size();c++){
+		   			Producto* objeto = inventario->GETproductos() [c];
+		   			preciototal += objeto->GETprecio();
+		   			unidadestotales += objeto->GETcantidad();
+				}
+				for (int c = 0;c < inventario->GETproductos().size();c++){
+		   			Producto* objeto = inventario->GETproductos() [c];
+		   			inventario->GETcategorias().push_back(objeto->GETcategoria());
+				}
+				for (int c = 0; c < inventario->GETcategorias().size();c++){
+					string categ = inventario->GETcategorias() [c];
+					cout << "Categoria: " << categ <<endl; 
+					for (int j = 0; j < inventario->GETproductos().size();j++){
+						Producto* objeto = inventario->GETproductos() [j];
+						if (objeto->GETcategoria() == categ){
+							cout << "id: " << objeto->GETid() << " nombre: " << objeto->GETnombre() << " categoria: " << objeto->GETcategoria() << " cantidad: " << objeto->GETcantidad() << " precio: "<< objeto->GETprecio() <<endl; 
+						}
+					}
+				}
+				cout << "Productos unicos: " << productosunicos <<endl;
+				cout << "Precio total de inventario: " << preciototal <<endl;
+				cout << "Unidades de productos totales: " << unidadestotales <<endl;
+				
 		   		break; 	
 				}//Fin de caso 2.
 			case 3:
 				{
-				cout << ""		
+				cout << "BUSQUEDA POR NOMBRE: " <<endl; 
+				cout << "Ingrese la cadena a buscar en el inventario. " <<endl; 
+				string cadena; 
+				cin.ignore(); 
+				getline(cin, cadena);
+				vector <Producto*> subproductos; 
+				for (int c = 0; c < inventario->GETproductos().size();c++){
+					
+				}		
 				break; 
 				}//Fin del caso 3.
 		}//Fin del switch del menu principal. 
